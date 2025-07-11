@@ -10,12 +10,43 @@ from routers.curso_asignatura_router import router as curso_asignatura_router
 from routers.horario_clase_router import router as horario_clase_router
 from routers.tipo_curso_router import router as tipo_curso_router
 
+tags_metadata = [
+    
+    {
+        "name": "Personas",
+        "description": "Permite gestionar las personas en la api"
+    },
+    {
+        "name": "Asignaturas",
+        "description": "Permite gestionar las diferentes asignaturas"
+    },
+    {
+        "name": "Cursos",
+        "description": "Permite gestionar los diferentes cursos"
+    },
+    {
+        "name": "Cursos_Asignaturas",
+        "description": "Permite gestionar cursos con sus asignaturas"
+    },
+    {
+        "name": "Horario_Clases",
+        "description": "Permite gestionar el horario de clase"
+    },
+    {
+        "name": "Tipo_Cursos",
+        "description": "Permite gestionar los difere3ntes tipos de cursos"
+    },
+
+
+]
+
 
 
 app = FastAPI(
     title="API gestion de Tarjetas",
     description="Permite gestionar los tipos de tarjetas",
     version="1.0.0",
+    openapi_tags= tags_metadata,
     
 )
 
