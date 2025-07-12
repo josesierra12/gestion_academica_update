@@ -17,6 +17,11 @@ class Persona(SQLModel, table=True):
     curso_instructor: List["Curso"] = Relationship( back_populates="instructor", sa_relationship_kwargs={"foreign_keys": "[Curso.id_instructor]"})
     curso_estudiante: List["Curso"] = Relationship(back_populates="estudiante",sa_relationship_kwargs={"foreign_keys": "[Curso.id_estudiante]"})
 
+
+    refresh_token: Optional["RefreshToken"] = Relationship(back_populates="persona")
+
+
+
 class CursoAsignatura(SQLModel, table=True):
     id_curso: int = Field(foreign_key="curso.id_curso", primary_key=True)
     id_asignatura: int = Field(foreign_key="asignatura.id_asignatura", primary_key=True)
@@ -56,3 +61,21 @@ class HorarioClase(SQLModel, table=True):
     aula: str
     id_curso: int = Field(foreign_key="curso.id_curso")
     curso: Optional["Curso"] = Relationship(back_populates="horarios")
+
+
+
+class RefreshToken(SQLModel, table=True):
+    id: int = Field(default=None, primary_key=True)
+    token: str
+    expiryDate: datetime
+
+    persona_id_persona: str = Field(sa_column=Column(String(50), ForeignKey("persona.id_persona"), unique=True))
+
+    # Relación uno a uno con Persona
+    persona: "Persona" = Relationship(back_populates="refresh_token")
+
+class BlackListToken(SQLModel, table=True):
+    id: int = Field(default=None, primary_key=True)
+    token: str
+    expiryDate: datetime
+    
