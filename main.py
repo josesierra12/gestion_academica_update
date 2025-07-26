@@ -1,6 +1,9 @@
 from fastapi import FastAPI
+from fastapi.params import Depends
+from fastapi.security import HTTPBearer
 from models.models import  SQLModel
 from seting.database import engine
+from fastapi.middleware.cors import CORSMiddleware
 
 # Impotracionees modulos de la api
 from routers.persona_router import router as persona_router
@@ -10,6 +13,8 @@ from routers.curso_asignatura_router import router as curso_asignatura_router
 from routers.horario_clase_router import router as horario_clase_router
 from routers.tipo_curso_router import router as tipo_curso_router
 from routers.auth_router import router as auth_router
+
+security = HTTPBearer()
 
 tags_metadata = [
     
@@ -48,10 +53,21 @@ tags_metadata = [
 
 
 app = FastAPI(
-    title="API gestion de Tarjetas",
-    description="Permite gestionar los tipos de tarjetas",
+    title="API gestion Academica",
+    description="Permite gestionar los curso academicos",
     version="1.0.0",
-    openapi_tags= tags_metadata,   
+    openapi_tags= tags_metadata,
+    dependencies=[Depends(security)]
+     
+)
+
+# Permitir acceso desde Angular
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],  # Cambia según tu entorno
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
