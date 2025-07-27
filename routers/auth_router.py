@@ -31,7 +31,7 @@ async def login(
             select(Persona).where(Persona.user_name == username)
         ).first()
 
-        if not persona or persona.password != PasswordUtils.hash_password(password):
+        if not persona or persona.password != password:
             raise HTTPException(status_code=401, detail="Credenciales inválidas")
 
         access_token = create_token({"sub": username,"name":persona.nombres,"lastname":persona.apellidos}, timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))

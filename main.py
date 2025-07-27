@@ -1,9 +1,12 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.params import Depends
-from fastapi.security import HTTPBearer
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer, OAuth2PasswordBearer
+from jose import JWTError
 from models.models import  SQLModel
 from seting.database import engine
+from seting.auth import security
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import HTTPException, status 
 
 # Impotracionees modulos de la api
 from routers.persona_router import router as persona_router
@@ -85,7 +88,7 @@ app.include_router(curso_asignatura_router)
 app.include_router(horario_clase_router)
 app.include_router(tipo_curso_router)
 
-
+        
 
 
 '''
